@@ -3,10 +3,34 @@ import shutil
 import os
 import secrets
 import string
+import urllib.request
 
 PYTHON_VERSION = "{{ cookiecutter.python_version }}"
 PROJECT_SLUG = "{{ cookiecutter.project_slug }}"
 USE_CELERY = "{{ cookiecutter.use_celery }}"
+
+def download_htmx():
+    if "{{ cookiecutter.use_htmx }}" == "y":
+        latest_url = "https://unpkg.com/htmx.org/dist/htmx.min.js"
+
+        js_dir = os.path.join(os.getcwd(), 'assets', 'js')
+        os.makedirs(js_dir, exist_ok=True)
+        target_path = os.path.join(js_dir, 'htmx.min.js')
+
+        try:
+            print("--- Fetching latest HTMX ---")
+            with urllib.request.urlopen(latest_url) as response:
+                actual_url = response.geturl()
+                version = actual_url.split('@')[-1].split('/')[0]
+
+                print(f"--- Downloading HTMX version: {version} ---")
+                with open(target_path, 'wb') as f:
+                    f.write(response.read())
+
+            print(f"--- HTMX saved to assets/js/htmx.min.js ---")
+        except Exception as e:
+            print(f"[!] Could not download HTMX: {e}")
+            print("[!] Please download it manually from https://htmx.org")
 
 def cleanup_unused_files():
     if USE_CELERY != 'yes':
@@ -100,6 +124,7 @@ if __name__ == "__main__":
     copy_env_file()
     rename_enviroment_files()
     generate_secret_key()
+    download_htmx()
     setup_environment()
     init_git()
     #finalize()

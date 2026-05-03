@@ -1,5 +1,6 @@
 import environ
 import os
+import sys
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,6 +10,8 @@ env = environ.Env(
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+sys.path.insert(0, str(BASE_DIR / "apps"))
 
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
@@ -32,7 +35,6 @@ if not DEBUG:
 if not DEBUG:
     ALLAUTH_TRUSTED_PROXY_COUNT = 1
 {% endif %}
-
 
 # Application definition
 
@@ -184,6 +186,12 @@ X_FRAME_OPTIONS = 'DENY'
 
 AUTH_USER_MODEL = "users.User"
 
+{% if cookiecutter.use_htmx == 'y' -%}
+# django-htmx
+
+INSTALLED_APPS += ["django_htmx"]
+MIDDLEWARE += ["django_htmx.middleware.HtmxMiddleware"]
+{%- endif %}
 
 # django-tailwind-cli
 

@@ -31,5 +31,9 @@
     "use_celery": [
         "no",
         "yes"
+    ],
+    "use_htmx": [
+        "no",
+        "yes"
     ]
 }
