@@ -6,7 +6,7 @@
 # --- CORE ---
 # Keep DEBUG=False in production — True leaks stack traces to the public.
 DEBUG=True
-SECRET_KEY={{ range(1, 50) | map('random_ascii') | join }}
+SECRET_KEY=CHANGE_ME
 ALLOWED_HOSTS=localhost,127.0.0.1
 CSRF_TRUSTED_ORIGINS=http://localhost,http://127.0.0.1
 

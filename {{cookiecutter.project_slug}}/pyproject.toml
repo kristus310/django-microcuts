@@ -11,9 +11,19 @@ dependencies = [
     "django-widget-tweaks",
     "gunicorn",
     "whitenoise[brotli]",
-    {% if cookiecutter.database_type == 'postgres' %}"psycopg2-binary",{% endif %}
-    {% if cookiecutter.use_allauth == 'yes' %}"django-allauth",{% endif %}
-    {% if cookiecutter.use_pillow == 'yes' %}"pillow",{% endif %}
-    {% if cookiecutter.use_celery == 'yes' %}"celery[redis]",{% endif %}
-    {% if cookiecutter.use_htmx == 'yes' %}"django-htmx",{% endif %}
+{%- if cookiecutter.database_type == 'postgres' %}
+    "psycopg2-binary",
+{%- endif %}
+{%- if cookiecutter.use_allauth == 'yes' %}
+    "django-allauth",
+{%- endif %}
+{%- if cookiecutter.use_pillow == 'yes' %}
+    "pillow",
+{%- endif %}
+{%- if cookiecutter.use_celery == 'yes' %}
+    "celery[redis]",
+{%- endif %}
+{%- if cookiecutter.use_htmx == 'yes' %}
+    "django-htmx",
+{%- endif %}
 ]
