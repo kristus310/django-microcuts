@@ -1,0 +1,18 @@
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "0.1.0"
+description = "{{ cookiecutter.description }}"
+readme = "README.md"
+requires-python = ">={{ cookiecutter.python_version }}"
+dependencies = [
+    "django",
+    "django-environ",
+    "django-tailwind-cli",
+    "django-widget-tweaks",
+    "gunicorn",
+    "whitenoise",
+    {% if cookiecutter.database_type == 'postgres' -%}"psycopg2-binary",{%- endif %}
+    {% if cookiecutter.use_allauth == 'yes' -%}"django-allauth",{%- endif %}
+    {% if cookiecutter.use_pillow == 'yes' -%}"pillow",{%- endif %}
+    {% if cookiecutter.use_celery == 'yes' -%}"celery[redis]",{%- endif %}
+]

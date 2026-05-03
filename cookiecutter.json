@@ -1,0 +1,35 @@
+{
+    "project_name": "Django Project",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+    "author": "Anonymous",
+    "description": "A django project.",
+    "language_code": [
+        "en-us",
+        "cs"
+    ],
+    "time_zone": [
+        "UTC",
+        "Europe/Prague"
+    ],
+    "python_version": [
+        "3.12",
+        "3.13",
+        "3.14"
+    ],
+    "database_type": [
+        "sqlite",
+        "postgres"
+    ],
+    "use_allauth": [
+        "no",
+        "yes"
+    ],
+    "use_pillow": [
+        "no",
+        "yes"
+    ],
+    "use_celery": [
+        "no",
+        "yes"
+    ]
+}
