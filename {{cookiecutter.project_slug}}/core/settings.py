@@ -16,20 +16,22 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['http://localhost', 'http://127.0.0.1'])
 
 if not DEBUG:
-    # Security headers
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
 
-    # Cookie security
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
-    # HSTS — only enable with a valid SSL cert (e.g. Let's Encrypt)
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+
+{% if cookiecutter.use_allauth == 'yes' %}
+if not DEBUG:
+    ALLAUTH_TRUSTED_PROXY_COUNT = 1
+{% endif %}
 
 
 # Application definition
@@ -41,12 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    {% if cookiecutter.use_allauth == 'yes' %}
-    "allauth",
-    "allauth.account",
-    {% endif %}
     "django_tailwind_cli",
     "widget_tweaks",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -58,9 +57,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    {% if cookiecutter.use_allauth == 'yes' %}
-    "allauth.account.middleware.AccountMiddleware",
-    {% endif %}
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -83,11 +79,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# Database
+# Databases
 
-DATABASES = {
-    'default': env.db('DATABASE_URL', default=f'sqlite:////{BASE_DIR}/db.sqlite3')
-}
+_db_config = env.db('DATABASE_URL', default=f'sqlite:////{BASE_DIR}/db.sqlite3')
+
+if not _db_config['ENGINE'].endswith('sqlite3'):
+    _db_config['CONN_MAX_AGE'] = env.int('CONN_MAX_AGE', default=60)
+    _db_config['CONN_HEALTH_CHECKS'] = True
+
+DATABASES = {'default': _db_config}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -114,7 +114,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "assets"]
+_ASSETS_DIR = BASE_DIR / "assets"
+STATICFILES_DIRS = [_ASSETS_DIR] if _ASSETS_DIR.exists() else []
 
 
 # Media files
@@ -126,16 +127,62 @@ MEDIA_ROOT = BASE_DIR / "media"
 {% if cookiecutter.use_allauth == 'yes' %}
 # django-allauth
 
+INSTALLED_APPS += [
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.usersessions",
+]
+
+MIDDLEWARE += [
+    "allauth.account.middleware.AccountMiddleware",
+    "allauth.usersessions.middleware.UserSessionsMiddleware",
+]
+
+SITE_ID = 1
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGIN_METHODS = {'email'}
-LOGIN_REDIRECT_URL = '/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_ADAPTER = "users.adapters.AccountAdapter"
+ACCOUNT_FORMS = {"signup": "users.forms.UserSignupForm"}
+
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 3600
+ACCOUNT_PASSWORD_MIN_LENGTH = 12
+ACCOUNT_REAUTHENTICATION_REQUIRED = True
+ACCOUNT_REAUTHENTICATION_TIMEOUT = env.int('ACCOUNT_REAUTHENTICATION_TIMEOUT', default=3600)
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = env('ACCOUNT_DEFAULT_HTTP_PROTOCOL', default='https')
+ACCOUNT_ALLOW_REGISTRATION = env.bool('ACCOUNT_ALLOW_REGISTRATION', default=True)
+
+USERSESSIONS_TRACK_ACTIVITY = True
+
+PASSWORD_RESET_TIMEOUT = 3600
+
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 {% endif %}
+
+# Sessions
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 14  # 14 days
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+X_FRAME_OPTIONS = 'DENY'
+
+
+# Custom User model
+
+AUTH_USER_MODEL = "users.User"
 
 
 # django-tailwind-cli

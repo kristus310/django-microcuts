@@ -8,6 +8,7 @@ urlpatterns = [
     {% if cookiecutter.use_allauth == 'yes' %}
     path('accounts/', include('allauth.urls')),
     {% endif %}
+    path("users/", include("users.urls", namespace="users")),
 ]
 
 if settings.DEBUG:
