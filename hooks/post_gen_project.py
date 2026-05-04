@@ -40,7 +40,7 @@ def cleanup_unused_files():
                 os.remove(full_path)
                 print(f"[+] Removed unused {path}")
 
-def rename_enviroment_files():
+def rename_environment_files():
     if os.path.exists('_gitignore'):
         os.rename('_gitignore', '.gitignore')
         print("[+] Renamed _gitignore to .gitignore")
@@ -122,7 +122,7 @@ def finalize():
 if __name__ == "__main__":
     cleanup_unused_files()
     copy_env_file()
-    rename_enviroment_files()
+    rename_environment_files()
     generate_secret_key()
     download_htmx()
     setup_environment()
