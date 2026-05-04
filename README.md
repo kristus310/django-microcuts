@@ -53,5 +53,7 @@ You will be prompted to configure your project with the following options:
 
 MIT
 
-## Fun fact
+---
+
+### Fun fact
 - The name **microcuts** came from the song [Muse - Micro Cuts](https://youtu.be/a3aRxqYeXlc?si=y7h9DdJD1erSR9D0)!
