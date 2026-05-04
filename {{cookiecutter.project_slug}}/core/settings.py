@@ -31,10 +31,6 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
-{% if cookiecutter.use_allauth == 'yes' %}
-if not DEBUG:
-    ALLAUTH_TRUSTED_PROXY_COUNT = 1
-{% endif %}
 
 # Application definition
 
@@ -129,6 +125,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 {% if cookiecutter.use_allauth == 'yes' %}
 # django-allauth
 
+if not DEBUG:
+    ALLAUTH_TRUSTED_PROXY_COUNT = 1
+
 INSTALLED_APPS += [
     "django.contrib.sites",
     "allauth",
@@ -186,7 +185,7 @@ X_FRAME_OPTIONS = 'DENY'
 
 AUTH_USER_MODEL = "users.User"
 
-{% if cookiecutter.use_htmx == 'y' -%}
+{% if cookiecutter.use_htmx == 'yes' -%}
 # django-htmx
 
 INSTALLED_APPS += ["django_htmx"]
