@@ -1,6 +1,7 @@
 # django-microcuts
 
-A lightweight [Cookiecutter](https://cookiecutter.readthedocs.io/) template for Django projects. Designed to work with [VS Code](https://code.visualstudio.com/), [mise](https://mise.jdx.dev/), and [uv](https://docs.astral.sh/uv/).
+- A lightweight [Cookiecutter](https://cookiecutter.readthedocs.io/) template for production ready Django projects. Designed to work with [VS Code](https://code.visualstudio.com/), [mise](https://mise.jdx.dev/), and [uv](https://docs.astral.sh/uv/).
+- It has **built-in** many packages support from [TailwindCSS](https://tailwindcss.com/) to [Gunicorn](https://gunicorn.org/). And many other **optional** packages to choose from, like [HTMX](https://htmx.org/). *See more in `What's included` section.*
 
 ---
 
@@ -42,7 +43,7 @@ You will be prompted to configure your project with the following options:
 - Django project scaffold with settings split for dev/prod
 - `pyproject.toml` managed by **uv**
 - `.mise.toml` for Python version management
-- `.vscode/` with recommended extensions and settings
+- Built-in integrations: `django-environ`, `django-tailwind-cli`, `django-widget-tweaks`, `gunicorn`, `whitenoise`
 - Optional integrations: `django-allauth`, `Pillow`, `Celery`, `htmx`
 - PostgreSQL or SQLite database configuration
 
