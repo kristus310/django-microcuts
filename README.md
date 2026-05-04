@@ -56,4 +56,4 @@ MIT
 ---
 
 ### Fun fact
-- The name **microcuts** came from the song [Muse - Micro Cuts](https://youtu.be/a3aRxqYeXlc?si=y7h9DdJD1erSR9D0)!
+- The name **microcuts** came from the song [Micro Cuts by Muse](https://youtu.be/a3aRxqYeXlc?si=y7h9DdJD1erSR9D0)!
