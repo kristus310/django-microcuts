@@ -1,0 +1,25 @@
+{% load tailwind_cli static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        {{ cookiecutter.project_name }} | {% block title %}{% endblock %}
+    </title>
+    {% tailwind_css %}
+    {%- if cookiecutter.use_htmx == 'yes' %}
+    <script src="{% static 'js/htmx.min.js' %}" defer></script>
+    {%- endif %}
+</head>
+
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+
+</html>
