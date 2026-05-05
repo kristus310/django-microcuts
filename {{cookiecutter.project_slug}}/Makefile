@@ -14,7 +14,7 @@ help:
 
 install:
 	mise use python@$(PYTHON_VERSION)
-	uv sync
+	uv sync --python $$(mise which python)
 	$(MANAGE) tailwind setup
 
 run:
