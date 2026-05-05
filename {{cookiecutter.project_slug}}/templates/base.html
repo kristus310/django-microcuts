@@ -15,7 +15,7 @@
     {%- endif %}
 </head>
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body {% if cookiecutter.use_htmx == 'yes' %}hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' {% endif %}>
     <main>
         {% block content %}
         {% endblock %}
