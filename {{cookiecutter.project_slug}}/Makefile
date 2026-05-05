@@ -2,15 +2,20 @@ PYTHON_VERSION ?= {{ cookiecutter.python_version }}
 PROJECT_SLUG   := {{ cookiecutter.project_slug }}
 MANAGE         := uv run manage.py
 
-BLUE  := \033[36m
-RESET := \033[0m
-
 .DEFAULT_GOAL := help
 
 .PHONY: help install run tailwind-watch migrate migrations shell build collectstatic clean serve {% if cookiecutter.use_celery == 'yes' %}worker{% endif %}
 
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(BLUE)%-20s$(RESET) %s\n", $$1, $$2}'
+	@echo "Available commands:"
+	@echo "  make install      - Setup python, install deps, and tailwind"
+	@echo "  make run          - Start dev server"
+	@echo "  make tailwind-watch - Watch tailwind changes"
+	@echo "  make migrate      - Run migrations"
+	@echo "  make migrations   - Create migrations"
+	@echo "  make shell        - Open Django shell"
+	@echo "  make build        - Production build (tailwind + static)"
+	@echo "  make clean        - Remove pycache and temporary files"
 
 install:
 	mise use python@$(PYTHON_VERSION)
