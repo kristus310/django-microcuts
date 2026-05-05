@@ -8,14 +8,16 @@ MANAGE         := uv run manage.py
 
 help:
 	@echo "Available commands:"
-	@echo "  make install      - Setup python, install deps, and tailwind"
-	@echo "  make run          - Start dev server"
+	@echo "  make install        - Setup python, install deps, and tailwind"
+	@echo "  make run            - Start dev server"
 	@echo "  make tailwind-watch - Watch tailwind changes"
-	@echo "  make migrate      - Run migrations"
-	@echo "  make migrations   - Create migrations"
-	@echo "  make shell        - Open Django shell"
-	@echo "  make build        - Production build (tailwind + static)"
-	@echo "  make clean        - Remove pycache and temporary files"
+	@echo "  make migrate        - Run migrations"
+	@echo "  make migrations     - Create migrations"
+	@echo "  make shell          - Open Django shell"
+	@echo "  make build          - Production build (tailwind + static)"
+	@echo "  make clean          - Remove pycache and temporary files"
+	@echo "  make serve          - Run production gunicorn server"
+{% if cookiecutter.use_celery == 'yes' %}	@echo "  make worker         - Start celery worker"{% endif %}
 
 install:
 	mise use python@$(PYTHON_VERSION)
