@@ -1,6 +1,6 @@
 # django-microcuts
 
-- A lightweight opinionated [Cookiecutter](https://cookiecutter.readthedocs.io/) template for production ready Django projects. Designed to work with [VS Code](https://code.visualstudio.com/), [mise](https://mise.jdx.dev/), and [uv](https://docs.astral.sh/uv/).
+- A lightweight opinionated [Cookiecutter](https://cookiecutter.readthedocs.io/) template for production ready Django projects. Designed to work with [mise](https://mise.jdx.dev/) and [uv](https://docs.astral.sh/uv/).
 - It has **built-in** many packages support from [TailwindCSS](https://tailwindcss.com/) to [Gunicorn](https://gunicorn.org/). And many other **optional** packages to choose from, like [HTMX](https://htmx.org/). *See more in `What's included` section.*
 
 ---
@@ -10,7 +10,6 @@
 - [cookiecutter](https://cookiecutter.readthedocs.io/en/stable/installation.html)
 - [mise](https://mise.jdx.dev/)
 - [uv](https://docs.astral.sh/uv/)
-- [VS Code](https://code.visualstudio.com/)
 
 ---
 

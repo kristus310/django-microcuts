@@ -1,4 +1,3 @@
-import subprocess
 import shutil
 import os
 import secrets
@@ -81,51 +80,10 @@ def generate_secret_key():
 
     print("[+] Generated SECRET_KEY")
 
-def setup_environment():
-    try:
-        print(f"[+] Activating Python {PYTHON_VERSION} with mise")
-        subprocess.run(["mise", "use", f"python@{PYTHON_VERSION}"], check=True)
-
-        print("[+] Syncing dependencies with uv")
-        subprocess.run(["mise", "x", "--", "uv", "sync", "--python", PYTHON_VERSION], check=True)
-
-    except FileNotFoundError as e:
-        print(f"\n[-] Missing tool: {e}. Please ensure mise and uv are installed.")
-    except subprocess.CalledProcessError as e:
-        print(f"\n[-] Error during environment setup: {e}")
-
-def init_git():
-    try:
-        subprocess.run(["git", "init"], check=True)
-        subprocess.run(["git", "add", "."], check=True)
-        subprocess.run(["git", "commit", "-m", "Initial commit"], check=True)
-        print("[+] Initialized git repository")
-    except (FileNotFoundError, subprocess.CalledProcessError) as e:
-        print(f"[-] Git init failed: {e}")
-
-def finalize():
-    commands = [
-        ["codium", ".", "-r"],
-        ["code", ".", "-r"],
-        ["flatpak", "run", "com.vscodium.codium", ".", "-r"],
-        ["flatpak", "run", "com.visualstudio.code", ".", "-r"]
-    ]
-
-    for cmd in commands:
-        try:
-            subprocess.run(cmd, check=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-            print(f"[+] Reopened workspace in {cmd[0]}")
-            return
-        except (FileNotFoundError, subprocess.CalledProcessError):
-            continue
-
 if __name__ == "__main__":
     cleanup_unused_files()
     copy_env_file()
     rename_environment_files()
     generate_secret_key()
     download_htmx()
-    setup_environment()
-    init_git()
-    #finalize()
     print(f"\n[+] {PROJECT_SLUG} is ready")
