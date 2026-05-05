@@ -14,7 +14,7 @@ help:
 
 install:
 	mise use python@$(PYTHON_VERSION)
-	uv sync --python $(PYTHON_VERSION)
+	uv sync
 	$(MANAGE) tailwind setup
 
 run:
@@ -41,12 +41,10 @@ collectstatic:
 
 serve:
 	uv run gunicorn $(PROJECT_SLUG).wsgi:application --bind 0.0.0.0:8000
-
 {% if cookiecutter.use_celery == 'yes' -%}
 worker:
 	uv run celery -A $(PROJECT_SLUG) worker -l info
 {%- endif %}
-
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type d -name "*.egg-info" -exec rm -rf {} +
