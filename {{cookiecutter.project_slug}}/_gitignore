@@ -69,3 +69,7 @@ docs/_build/
 # Environment variations
 .env.*
 !.env.example
+
+# Tailwind
+.django_tailwind_cli/
+assets/css/output.css
