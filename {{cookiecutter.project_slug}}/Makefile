@@ -13,6 +13,7 @@ help:
 	@echo "  make tailwind-watch - Watch tailwind changes"
 	@echo "  make migrate        - Run migrations"
 	@echo "  make migrations     - Create migrations"
+	@echo "  make superuser      - Create a super user (admin)"
 	@echo "  make shell          - Open Django shell"
 	@echo "  make build          - Production build (tailwind + static)"
 	@echo "  make clean          - Remove pycache and temporary files"
@@ -38,6 +39,9 @@ migrate:
 
 migrations:
 	$(MANAGE) makemigrations
+
+superuser:
+	$(MANAGE) createsuperuser
 
 build:
 	$(MANAGE) tailwind build
