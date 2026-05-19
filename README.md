@@ -48,6 +48,11 @@ You will be prompted to configure your project with the following options:
 
 ---
 
+## Projects using django-microcuts
+- [Falsetto](https://github.com/kristus310/falsetto) - A music lyric guessing game built with Django, HTMX, and DaisyUI/Tailwind CSS.
+
+---
+
 ## License
 
 MIT
