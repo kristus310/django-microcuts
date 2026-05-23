@@ -51,7 +51,7 @@ collectstatic:
 	$(MANAGE) collectstatic --no-input
 
 serve:
-	uv run gunicorn $(PROJECT_SLUG).wsgi:application --bind 0.0.0.0:8000
+	uv run gunicorn core.wsgi:application --bind 0.0.0.0:8000
 {% if cookiecutter.use_celery == 'yes' -%}
 worker:
 	uv run celery -A $(PROJECT_SLUG) worker -l info
