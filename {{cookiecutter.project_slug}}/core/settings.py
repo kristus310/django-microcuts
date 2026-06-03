@@ -122,7 +122,6 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-{% if cookiecutter.use_allauth == 'yes' %}
 # django-allauth
 
 if not DEBUG:
@@ -170,7 +169,6 @@ PASSWORD_RESET_TIMEOUT = 3600
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
-{% endif %}
 
 # Sessions
 

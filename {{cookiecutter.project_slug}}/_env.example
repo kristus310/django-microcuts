@@ -41,12 +41,10 @@ CELERY_BROKER_URL=redis://localhost:6379/0
 CELERY_RESULT_BACKEND=redis://localhost:6379/0
 {%- endif %}
 
-{% if cookiecutter.use_allauth == 'yes' -%}
 # --- ALLAUTH ---
 ACCOUNT_ALLOW_REGISTRATION=True
 # Set to 'https' in production
 ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
-{%- endif %}
 
 # --- PRODUCTION CHECKLIST ---
 # 1. DEBUG=False

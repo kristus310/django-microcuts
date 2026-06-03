@@ -11,14 +11,10 @@ dependencies = [
     "django-widget-tweaks",
     "gunicorn",
     "whitenoise[brotli]",
+    "django-allauth",
+    "pillow",
 {%- if cookiecutter.database_type == 'postgres' %}
     "psycopg2-binary",
-{%- endif %}
-{%- if cookiecutter.use_allauth == 'yes' %}
-    "django-allauth",
-{%- endif %}
-{%- if cookiecutter.use_pillow == 'yes' %}
-    "pillow",
 {%- endif %}
 {%- if cookiecutter.use_celery == 'yes' %}
     "celery[redis]",

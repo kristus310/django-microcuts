@@ -20,14 +20,6 @@
         "sqlite",
         "postgres"
     ],
-    "use_allauth": [
-        "no",
-        "yes"
-    ],
-    "use_pillow": [
-        "no",
-        "yes"
-    ],
     "use_celery": [
         "no",
         "yes"

@@ -30,8 +30,6 @@ You will be prompted to configure your project with the following options:
 | `time_zone` | `UTC` | `UTC`, `Europe/Prague` |
 | `python_version` | `3.12` | `3.12`, `3.13`, `3.14` |
 | `database_type` | `sqlite` | `sqlite`, `postgres` |
-| `use_allauth` | `no` | `no`, `yes` |
-| `use_pillow` | `no` | `no`, `yes` |
 | `use_celery` | `no` | `no`, `yes` |
 | `use_htmx` | `no` | `no`, `yes` |
 
@@ -42,8 +40,8 @@ You will be prompted to configure your project with the following options:
 - Django project scaffold with settings split for dev/prod
 - `pyproject.toml` managed by **uv**
 - `.mise.toml` for Python version management
-- Built-in integrations: `django-environ`, `django-tailwind-cli`, `django-widget-tweaks`, `gunicorn`, `whitenoise`
-- Optional integrations: `django-allauth`, `Pillow`, `Celery`, `htmx`
+- Built-in integrations: `django-environ`, `django-tailwind-cli`, `django-widget-tweaks`, `gunicorn`, `whitenoise`, `Pillow` and `django-allauth`
+- Optional integrations: `Celery`, `htmx`
 - PostgreSQL or SQLite database configuration
 
 ---
