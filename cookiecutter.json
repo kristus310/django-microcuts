@@ -27,5 +27,9 @@
     "use_htmx": [
         "no",
         "yes"
+    ],
+    "use_users_app": [
+        "yes",
+        "no"
     ]
 }

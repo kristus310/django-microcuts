@@ -54,7 +54,7 @@ serve:
 	uv run gunicorn core.wsgi:application --bind 0.0.0.0:8000
 {% if cookiecutter.use_celery == 'yes' -%}
 worker:
-	uv run celery -A $(PROJECT_SLUG) worker -l info
+	uv run celery -A core worker -l info
 {%- endif %}
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +

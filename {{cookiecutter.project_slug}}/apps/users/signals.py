@@ -47,3 +47,8 @@ def sync_user_email_to_allauth(sender, instance, created, **kwargs):
         if not email_address.primary:
             EmailAddress.objects.filter(user=instance).exclude(pk=email_address.pk).update(primary=False)
             EmailAddress.objects.filter(pk=email_address.pk).update(primary=True)
+
+
+@receiver(post_save, sender=User)
+def create_or_save_user_profile(sender, instance, created, **kwargs):
+    UserProfile.objects.get_or_create(user=instance)

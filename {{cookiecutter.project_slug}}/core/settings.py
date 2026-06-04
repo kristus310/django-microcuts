@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django_tailwind_cli",
     "widget_tweaks",
+{%- if cookiecutter.use_users_app == 'yes' %}
     "users",
+{%- endif %}
 ]
 
 MIDDLEWARE = [
@@ -122,6 +124,7 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
+{% if cookiecutter.use_users_app == 'yes' -%}
 # django-allauth
 
 if not DEBUG:
@@ -170,6 +173,12 @@ PASSWORD_RESET_TIMEOUT = 3600
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
+# Custom User model
+
+AUTH_USER_MODEL = "users.User"
+{%- endif %}
+
+
 # Sessions
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 14  # 14 days
@@ -180,9 +189,7 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 X_FRAME_OPTIONS = 'DENY'
 
 
-# Custom User model
 
-AUTH_USER_MODEL = "users.User"
 
 {% if cookiecutter.use_htmx == 'yes' -%}
 # django-htmx

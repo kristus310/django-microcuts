@@ -2,8 +2,6 @@ import os
 import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from .managers import UserManager
 from .validators import validate_avatar
 
@@ -46,7 +44,7 @@ class UserProfile(models.Model):
     def avatar_url(self):
         if self.avatar:
             return self.avatar.url
-        return "/static/images/user.png"
+        return "/static/images/user.svg"
 
     def __str__(self):
         return f"{self.user.email} - profile"
@@ -57,8 +55,3 @@ class UserProfile(models.Model):
                 os.remove(self.avatar.path)
             self.avatar = None
             self.save(update_fields=["avatar"])
-
-
-@receiver(post_save, sender=User)
-def create_or_save_user_profile(sender, instance, created, **kwargs):
-    UserProfile.objects.get_or_create(user=instance)

@@ -13,24 +13,27 @@ def validate_avatar(file):
         raise ValidationError(f"File too large. Maximum size is {max_mb} MB.")
 
     try:
-        img = Image.open(file)
-        img.load()
-        file.seek(0)
+        with Image.open(file) as img:
+            img.load()
+            
+            max_dim = getattr(settings, "AVATAR_MAX_DIMENSIONS", 2000)
+            if img.width > max_dim or img.height > max_dim:
+                raise ValidationError(
+                    f"Image too large. Maximum dimensions are {max_dim}×{max_dim} px."
+                )
+
+            allowed_formats = {"JPEG", "PNG", "WEBP"}
+            if img.format not in allowed_formats:
+                raise ValidationError(
+                    f"Unsupported format '{img.format}'. Upload a JPEG, PNG, or WebP."
+                )
+            
+            file.seek(0)
     except DecompressionBombError:
         raise ValidationError("Image is too large to process safely.")
     except UnidentifiedImageError:
         raise ValidationError("Upload a valid image file (JPEG, PNG, or WebP).")
+    except ValidationError:
+        raise
     except Exception:
         raise ValidationError("Upload a valid image file.")
-
-    max_dim = getattr(settings, "AVATAR_MAX_DIMENSIONS", 2000)
-    if img.width > max_dim or img.height > max_dim:
-        raise ValidationError(
-            f"Image too large. Maximum dimensions are {max_dim}×{max_dim} px."
-        )
-
-    allowed_formats = {"JPEG", "PNG", "WEBP"}
-    if img.format not in allowed_formats:
-        raise ValidationError(
-            f"Unsupported format '{img.format}'. Upload a JPEG, PNG, or WebP."
-        )

@@ -11,8 +11,10 @@ dependencies = [
     "django-widget-tweaks",
     "gunicorn",
     "whitenoise[brotli]",
+{%- if cookiecutter.use_users_app == 'yes' %}
     "django-allauth",
     "pillow",
+{%- endif %}
 {%- if cookiecutter.database_type == 'postgres' %}
     "psycopg2-binary",
 {%- endif %}

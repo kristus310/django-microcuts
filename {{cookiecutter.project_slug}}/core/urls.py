@@ -5,8 +5,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+{%- if cookiecutter.use_users_app == 'yes' %}
     path('accounts/', include('allauth.urls')),
     path("users/", include("users.urls", namespace="users")),
+{%- endif %}
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,6 @@
 {% raw %}{% load tailwind_cli static %}{% endraw %}
 <!DOCTYPE html>
-<html lang="en" data-theme="">
+<html lang="en" class="h-full bg-base-100" data-theme="dim">
 
 <head>
     <meta charset="UTF-8">
@@ -15,16 +15,59 @@
     {%- if cookiecutter.use_htmx == 'yes' %}
     <script src="{% raw %}{% static 'js/htmx.min.js' %}{% endraw %}" defer></script>
     {%- endif %}
+    <style>
+        .alert {
+            transition: opacity 0.5s ease;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+    </style>
 </head>
 
-<body {%- if cookiecutter.use_htmx == 'yes' %} hx-headers='{"X-CSRFToken": "{% raw %}{{ csrf_token }}{% endraw %}"}'
-    {% endif %}>
-    <main>
+<body class="flex flex-col min-h-full bg-base-100 text-base-content" {%- if cookiecutter.use_htmx == 'yes' %}
+    hx-headers='{"X-CSRFToken": "{% raw %}{{ csrf_token }}{% endraw %}"}' {% endif %}>
+
+    <main class="flex-grow">
         {% raw %}
         {% block content %}
         {% endblock %}
         {% endraw %}
     </main>
+
+    <script>
+        function togglePasswordVisibility(fieldId, button) {
+            const input = document.getElementById(fieldId);
+            if (!input) return;
+            const eyeOpen = button.querySelector('.eye-open');
+            const eyeClosed = button.querySelector('.eye-closed');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeOpen.classList.add('hidden');
+                eyeClosed.classList.remove('hidden');
+            } else {
+                input.type = 'password';
+                eyeOpen.classList.remove('hidden');
+                eyeClosed.classList.add('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const toasts = document.querySelectorAll('.toast .alert');
+                toasts.forEach(toast => {
+                    toast.classList.add('fade-out');
+                    setTimeout(() => {
+                        if (toast && toast.parentElement) {
+                            toast.remove();
+                        }
+                    }, 500);
+                });
+            }, 5000);
+        });
+    </script>
 </body>
 
 </html>
