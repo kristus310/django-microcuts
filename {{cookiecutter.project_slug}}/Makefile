@@ -4,7 +4,7 @@ MANAGE         := uv run manage.py
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install run tailwind-watch migrate migrations shell build collectstatic clean serve {% if cookiecutter.use_celery == 'yes' %}worker{% endif %}
+.PHONY: help install run tailwind-watch migrate migrations shell build collectstatic clean serve test {% if cookiecutter.use_celery == 'yes' %}worker{% endif %}
 
 help:
 	@echo "Available commands:"
@@ -18,6 +18,7 @@ help:
 	@echo "  make build          - Production build (tailwind + static)"
 	@echo "  make clean          - Remove pycache and temporary files"
 	@echo "  make serve          - Run production gunicorn server"
+	@echo "  make test           - Run tests"
 {% if cookiecutter.use_celery == 'yes' %}	@echo "  make worker         - Start celery worker"{% endif %}
 
 install:
@@ -56,6 +57,9 @@ serve:
 worker:
 	uv run celery -A core worker -l info
 {%- endif %}
+test:
+	$(MANAGE) test
+
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type d -name "*.egg-info" -exec rm -rf {} +

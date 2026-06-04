@@ -19,7 +19,6 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['http://localhost', 'http://127.0.0.1'])
 
 if not DEBUG:
-    SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
@@ -68,6 +67,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Databases
 
-_db_config = env.db('DATABASE_URL', default=f'sqlite:////{BASE_DIR}/db.sqlite3')
+_db_config = env.db('DATABASE_URL', default=f'sqlite:///{BASE_DIR}/db.sqlite3')
 
 if not _db_config['ENGINE'].endswith('sqlite3'):
     _db_config['CONN_MAX_AGE'] = env.int('CONN_MAX_AGE', default=60)
@@ -187,6 +187,8 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 X_FRAME_OPTIONS = 'DENY'
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
 
 

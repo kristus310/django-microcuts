@@ -51,7 +51,6 @@ class UserProfile(models.Model):
 
     def delete_avatar(self):
         if self.avatar:
-            if os.path.isfile(self.avatar.path):
-                os.remove(self.avatar.path)
+            self.avatar.storage.delete(self.avatar.name)
             self.avatar = None
             self.save(update_fields=["avatar"])

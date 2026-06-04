@@ -16,7 +16,7 @@ from .models import UserProfile
 def delete_avatar(request):
     request.user.profile.delete_avatar()
     messages.success(request, "Avatar removed.")
-    return redirect("users:settings")
+    return redirect("/")
 
 
 @login_required
@@ -30,4 +30,4 @@ def delete_account(request: HttpRequest) -> HttpResponse:
         messages.success(request, "Your account has been permanently deleted.")
         return redirect("account_login")
     messages.error(request, "Incorrect password. Account was not deleted.")
-    return redirect("users:settings")
+    return redirect("/")

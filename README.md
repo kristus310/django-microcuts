@@ -32,6 +32,7 @@ You will be prompted to configure your project with the following options:
 | `database_type` | `sqlite` | `sqlite`, `postgres` |
 | `use_celery` | `no` | `no`, `yes` |
 | `use_htmx` | `no` | `no`, `yes` |
+| `use_users_app` | `yes` | `yes`, `no` |
 
 ---
 
@@ -40,8 +41,8 @@ You will be prompted to configure your project with the following options:
 - Django project scaffold with settings split for dev/prod
 - `pyproject.toml` managed by **uv**
 - `.mise.toml` for Python version management
-- Built-in integrations: `django-environ`, `django-tailwind-cli`, `django-widget-tweaks`, `gunicorn`, `whitenoise`, `Pillow` and `django-allauth`
-- Optional integrations: `Celery`, `htmx`
+- Built-in integrations: `django-environ`, `django-tailwind-cli`, `django-widget-tweaks`, `gunicorn`, `whitenoise`
+- Optional integrations: `Celery`, `htmx`, `Pillow` and `django-allauth`
 - PostgreSQL or SQLite database configuration
 
 ---
